@@ -1,14 +1,39 @@
+#!/usr/bin/env zsh
+
 local SEGMENT_SEPARATOR=''
 local GIT_BRANCH=''
-local lambda="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
+local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
+
+# Git sometimes goes into a detached head state. git_prompt_info doesn't
+# return anything in this case. So wrap it in another function and check
+# for an empty string.
+function check_git_prompt_info() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        if [[ -z $(git_prompt_info) ]]; then
+            echo "%{$fg[magenta]%}detached-head%{$reset_color%}) $(git_prompt_status)
+%{$fg[yellow]%}→ "
+        else
+            echo "$(git_prompt_info) $(git_prompt_status)
+%{$fg[yellow]%}→ "
+        fi
+    else
+        echo "%{$fg[yellow]%}→ "
+    fi
+}
+
+function print_blank_line() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo -e "n"
+    else
+        echo -n "b"
+    fi
+}
 
 PROMPT='
-${lambda}\
+${LAMBDA}\
  %{$fg_bold[magenta]%}%n\
  %{$fg[black]%}[%3~]\
- $(git_prompt_info)\
- $(git_prompt_status)
-%{$fg[yellow]%}→ \
+ $(check_git_prompt_info)\
 %{$reset_color%}'
 
 RPROMPT='$(git_prompt_short_sha)%{$reset_color%}'
@@ -17,7 +42,7 @@ RPROMPT='$(git_prompt_short_sha)%{$reset_color%}'
 ZSH_THEME_GIT_PROMPT_PREFIX="at %{$fg[magenta]%}⭠ "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=""
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg_bold[green]%}✔"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%} ✔"
 
 # Format for git_prompt_status()
 ZSH_THEME_GIT_PROMPT_ADDED="%{$fg_bold[green]%}+"
