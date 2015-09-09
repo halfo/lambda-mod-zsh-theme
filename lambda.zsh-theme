@@ -17,7 +17,7 @@ RPROMPT='$(git_prompt_short_sha)%{$reset_color%}'
 ZSH_THEME_GIT_PROMPT_PREFIX="at %{$fg[magenta]%}⭠ "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=""
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg_bold[green]%}✔"
 
 # Format for git_prompt_status()
 ZSH_THEME_GIT_PROMPT_ADDED="%{$fg_bold[green]%}+"
