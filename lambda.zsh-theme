@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-local GIT_BRANCH=''
 local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
 
 # Git sometimes goes into a detached head state. git_prompt_info doesn't
