@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-local SEGMENT_SEPARATOR=''
 local GIT_BRANCH=''
 local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
 
@@ -14,7 +13,7 @@ function check_git_prompt_info() {
 %{$fg[yellow]%}→ "
         else
             echo "$(git_prompt_info) $(git_prompt_status)
-%{$fg[yellow]%}→ "
+%{$fg_bold[yellow]%}→ "
         fi
     else
         echo "%{$fg[yellow]%}→ "
