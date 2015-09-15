@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
+if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 
 # Git sometimes goes into a detached head state. git_prompt_info doesn't
 # return anything in this case. So wrap it in another function and check
@@ -8,14 +9,14 @@ local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
 function check_git_prompt_info() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
         if [[ -z $(git_prompt_info) ]]; then
-            echo "%{$fg[magenta]%}detached-head%{$reset_color%}) $(git_prompt_status)
+            echo "%{$fg[blue]%}detached-head%{$reset_color%}) $(git_prompt_status)
 %{$fg[yellow]%}→ "
         else
             echo "$(git_prompt_info) $(git_prompt_status)
-%{$fg_bold[yellow]%}→ "
+%{$fg_bold[cyan]%}→ "
         fi
     else
-        echo "%{$fg[yellow]%}→ "
+        echo "%{$fg_bold[cyan]%}→ "
     fi
 }
 
@@ -29,15 +30,15 @@ function print_blank_line() {
 
 PROMPT='
 ${LAMBDA}\
- %{$fg_bold[magenta]%}%n\
- %{$fg[black]%}[%3~]\
+ %{$fg_bold[$USERCOLOR]%}%n\
+ %{$fg_no_bold[magenta]%}[%3~]\
  $(check_git_prompt_info)\
 %{$reset_color%}'
 
 RPROMPT='$(git_prompt_short_sha)%{$reset_color%}'
 
 # Format for git_prompt_info()
-ZSH_THEME_GIT_PROMPT_PREFIX="at %{$fg[magenta]%}⭠ "
+ZSH_THEME_GIT_PROMPT_PREFIX="at %{$fg[blue]%}⭠ "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=""
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%} ✔"
@@ -55,5 +56,5 @@ ZSH_THEME_GIT_PROMPT_AHEAD=" %{$fg_bold[white]%}^"
 
 
 # Format for git_prompt_long_sha() and git_prompt_short_sha()
-ZSH_THEME_GIT_PROMPT_SHA_BEFORE=" %{$fg_bold[white]%}[%{$fg_bold[yellow]%}"
+ZSH_THEME_GIT_PROMPT_SHA_BEFORE=" %{$fg_bold[white]%}[%{$fg_bold[blue]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$fg_bold[white]%}]"
