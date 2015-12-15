@@ -20,11 +20,11 @@ function check_git_prompt_info() {
     fi
 }
 
-function print_blank_line() {
+function get_right_prompt() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
-        echo -e "n"
+        echo -n "$(git_prompt_short_sha)%{$reset_color%}"
     else
-        echo -n "b"
+        echo -n "%{$reset_color%}"
     fi
 }
 
@@ -35,7 +35,7 @@ ${LAMBDA}\
  $(check_git_prompt_info)\
 %{$reset_color%}'
 
-RPROMPT='$(git_prompt_short_sha)%{$reset_color%}'
+RPROMPT='$(get_right_prompt)'
 
 # Format for git_prompt_info()
 ZSH_THEME_GIT_PROMPT_PREFIX="at %{$fg[blue]%} "
