@@ -28,7 +28,7 @@ function get_right_prompt() {
     fi
 }
 
-PROMPT='
+PROMPT='\
 ${LAMBDA}\
  %{$fg_bold[$USERCOLOR]%}%n\
  %{$fg_no_bold[magenta]%}[%3~]\
