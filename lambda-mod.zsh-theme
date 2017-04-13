@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+# New Line Character
+NEW_LINE='
+'
+LAMBDA_NEW_LINE=${LAMBDA_NEW_LINE:-NEW_LINE}
+
 local LAMBDA="%(?,%{$fg_bold[green]%}λ,%{$fg_bold[red]%}λ)"
 if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 
@@ -32,6 +37,7 @@ PROMPT="
 ${LAMBDA}\
  %{$fg_bold[$USERCOLOR]%}%n\
  %{$fg_no_bold[magenta]%}[%3~]\
+ ${LAMBDA_NEW_LINE}\
  $(check_git_prompt_info)\
 %{$reset_color%}"
 
