@@ -28,8 +28,7 @@ function get_right_prompt() {
     fi
 }
 
-PROMPT='
-${LAMBDA}\
+PROMPT=$'\n'$LAMBDA'\
  %{$fg_bold[$USERCOLOR]%}%n\
  %{$fg_no_bold[magenta]%}[%3~]\
  $(check_git_prompt_info)\
