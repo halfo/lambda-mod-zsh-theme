@@ -8,11 +8,11 @@ if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 # for an empty string.
 function check_git_prompt_info() {
     if git rev-parse --git-dir > /dev/null 2>&1; then
-        if [[ -z $(git_prompt_info) ]]; then
+        if [[ -z $(git_prompt_info 2> /dev/null) ]]; then
             echo "%{$fg[blue]%}detached-head%{$reset_color%}) $(git_prompt_status)
 %{$fg[yellow]%}→ "
         else
-            echo "$(git_prompt_info) $(git_prompt_status)
+            echo "$(git_prompt_info 2> /dev/null) $(git_prompt_status)
 %{$fg_bold[cyan]%}→ "
         fi
     else
