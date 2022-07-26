@@ -19,3 +19,9 @@ export LAMBDA_MOD_N_DIR_LEVELS=10
 
 # load `lambda-mod` and `oh-my-zsh`
 ```
+
+## Fig
+
+Install `lambda-mod-zsh-theme` with [Fig](https://fig.io) in just one click.
+
+<a href="https://fig.io/plugins/other/lambda-mod-zsh-theme_halfo" target="_blank"><img src="https://fig.io/badges/install-with-fig.svg" /></a>
