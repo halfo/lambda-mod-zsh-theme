@@ -1,6 +1,7 @@
 # Lambda (Mod) ZSH Theme
 
 A ZSH theme optimized for people who use:
+
 - Git
 - Unicode-compatible fonts and terminals
 
@@ -10,12 +11,21 @@ A ZSH theme optimized for people who use:
 
 ## Configuring the amount of dir levels
 
-By default only the last three directories are shown in the prompt. The amount of
-levels can be configured by setting `LAMBDA_MOD_N_DIR_LEVELS` before loading the prompt:
+By default only the last three directories are shown in the prompt. The amount of levels can be
+configured by setting `LAMBDA_MOD_N_DIR_LEVELS` before loading the prompt:
 
-``` zsh
+```zsh
 # ~/.zshrc
 export LAMBDA_MOD_N_DIR_LEVELS=10
+
+# load `lambda-mod` and `oh-my-zsh`
+```
+
+You can display the hostname after the username with a "@" separator by setting:
+
+```zsh
+# ~/.zshrc
+export LAMBDA_MOD_HOST_SUF=true
 
 # load `lambda-mod` and `oh-my-zsh`
 ```
