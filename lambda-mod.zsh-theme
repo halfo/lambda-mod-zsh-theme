@@ -31,7 +31,7 @@ function get_right_prompt() {
 HOST_SUF=$([[ "$LAMBDA_MOD_HOST_SUF" == "true" ]] && echo "@%m" || echo "")
 
 PROMPT=$'\n'$LAMBDA'\
- %{$fg_bold[$USERCOLOR]%}%n@'${HOST_SUF}'\
+ %{$fg_bold[$USERCOLOR]%}%n'${HOST_SUF}'\
  %{$fg_no_bold[magenta]%}[%'${LAMBDA_MOD_N_DIR_LEVELS:-3}'~]\
  $(check_git_prompt_info)\
 %{$reset_color%}'
