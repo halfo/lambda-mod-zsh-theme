@@ -7,16 +7,32 @@ if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 # return anything in this case. So wrap it in another function and check
 # for an empty string.
 function check_git_prompt_info() {
-    if type git &>/dev/null && git rev-parse --git-dir > /dev/null 2>&1; then
-        if [[ -z $(git_prompt_info 2> /dev/null) ]]; then
-            echo "%{$fg[blue]%}detached-head%{$reset_color%} $(git_prompt_status)
+    # 1. First, verify we are even in a Git repository
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        echo "%{$fg_bold[cyan]%}→ "
+        return
+    fi
+
+    # 2. Check if we are in a detached HEAD state using git plumbing
+    # git symbolic-ref fails (exit code 1) if HEAD is detached
+    if ! git symbolic-ref -q HEAD >/dev/null; then
+        # This is a TRUE detached head (pointing to a SHA)
+        echo "%{$fg[blue]%}detached-head%{$reset_color%} $(git_prompt_status)
 %{$fg[yellow]%}→ "
+    else
+        # 3. We are on a branch. 
+        # We call git_prompt_info to get your "at  branchname" formatting
+        local prompt_out=$(git_prompt_info 2> /dev/null)
+        
+        if [[ -n "$prompt_out" ]]; then
+            echo "$prompt_out $(git_prompt_status)
+%{$fg_bold[cyan]%}→ "
         else
-            echo "$(git_prompt_info 2> /dev/null) $(git_prompt_status)
+            # Fallback: If git_prompt_info is missing/empty but we ARE on a branch
+            local branch=$(git symbolic-ref --short HEAD)
+            echo "at %{$fg[blue]%} $branch%{$reset_color%} $(git_prompt_status)
 %{$fg_bold[cyan]%}→ "
         fi
-    else
-        echo "%{$fg_bold[cyan]%}→ "
     fi
 }
 
